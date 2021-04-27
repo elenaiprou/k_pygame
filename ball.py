@@ -16,9 +16,12 @@ game_over = False
 x = ANCHO // 2 # Dos divisiones no dan numeros decimales
 y = ALTO // 2
 
-vx = -2 #variable velocidad en X
-vy = -2 #variable velocidad en Y
+vx = -7 #variable velocidad en X
+vy = -7 #variable velocidad en Y
+reloj = pg.time.Clock() #ayuda a relentizar cada vuelta de bucle
+
 while not game_over:
+    reloj.tick(60) #con este comando dices cada cuanto quieres que se actualicen los eventos    
     #gestion eventos
     for event in pg.event.get():
         if event.type == pg.QUIT:
@@ -28,17 +31,10 @@ while not game_over:
     x += vx
     y += vy
 
-    if y == 0:
-        vy = 2
-
-    if y == ALTO:
-        vy = -2
-
-    if x == 0:
-        vx = 2
-
-    if x == ANCHO:
-        vx = -2   
+    if y <= 0 or y >= ALTO:
+        vy = -vy
+    if x <= 0 or x >= ANCHO:
+        vx = -vx
     
     #gestion pantalla
     pantalla.fill(Negro)
