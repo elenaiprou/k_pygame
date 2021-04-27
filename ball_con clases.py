@@ -27,13 +27,6 @@ pg.init()
 pantalla = pg.display.set_mode((ANCHO,ALTO))
 reloj = pg.time.Clock() #ayuda a relentizar cada vuelta de bucle
 
-class Bola():
-    def __init__(self, x, y, vx, vy, color):
-        self.x = x
-        self.y = y
-        self.vx = vx
-        self.vy = vy
-        self.color = color
 
 class Bola():
     def __init__(self, x, y, vx, vy, color):
@@ -43,7 +36,7 @@ class Bola():
         self.vy = vy
         self.color = color
 
-
+# crear una funcion dentro de la clase y cargarnos las de rebotaX y rebotaY
 
 bolas = []
 for _ in range(10):
