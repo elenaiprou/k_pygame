@@ -1,4 +1,5 @@
 import pygame as pg
+import sys
 
 pg.init() # Inicializar todos los controles de pygame
 pantalla = pg.display.set_mode((600,400))
@@ -9,8 +10,8 @@ game_over = False
 while not game_over:
     # Gestion de eventos
     for event in pg.event.get():
-        pass
-
+        if event.type == pg.QUIT: #Se ha de poner el "pg." delante de quit pq forma parte de la libreria pygame 
+            game_over = True
 
     # Gestion del estado
     print("Hola mundo")
