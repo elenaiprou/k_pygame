@@ -39,7 +39,7 @@ class Bola():
         pg.draw.circle(lienzo, self.color, (self.x, self.y), self.radio)
 
 
-bolas = []
+bolas = []   #creamos lista vacia
 for _ in range(10):
     bola = Bola(randint(0, ANCHO),
                 randint(0, ALTO),
@@ -48,7 +48,7 @@ for _ in range(10):
                 (randint(0, 255), randint(0,255), randint(0,255)),
                 randint(5, 20))
 
-    bolas.append(bola)
+    bolas.append(bola) #rellenamos lista con bolas creadas en el bucle for
 
 game_over = False
 while not game_over:
