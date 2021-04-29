@@ -2,8 +2,6 @@ import pygame as pg
 import sys
 from random import randint, choice
 
-
-
 #declaración colores para que sea más fácil usar durante el juego
 Rojo = (255, 0, 0)
 Azul = (0, 0, 255)
@@ -20,10 +18,10 @@ reloj = pg.time.Clock() #ayuda a relentizar cada vuelta de bucle
 
 class Bola():
     def __init__(self, x, y, vx=5, vy=5, color=(255,255,255), radio=10):
-        self.x = x
-        self.y = y
-        self.vx = vx
-        self.vy = vy
+        self.x = x #posición
+        self.y = y #posición
+        self.vx = vx #movimiento, velocidad
+        self.vy = vy #movimiento, velocidad
         self.color = color
         self.radio = radio
 
@@ -69,7 +67,6 @@ while not game_over:
     pantalla.fill(Negro)
     for bola in bolas:
         bola.dibujar(pantalla)
-        
 
     pg.display.flip()
 
