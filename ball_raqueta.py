@@ -95,7 +95,7 @@ while not game_over:
     # Modificación de estado
     bola.actualizar()
     raqueta.actualizar()
-    #bola.comprueba_colision(raqueta)
+    bola.comprueba_colision(raqueta)
 
     # Gestión de la pantalla
     pantalla.fill(Negro)
@@ -107,3 +107,7 @@ while not game_over:
 
 pg.quit()
 sys.exit()
+
+#copiar funcion del comprueba_colisopm, etc
+# hacer contador. (como en el termometro)
+# poner game over en la pantalla
