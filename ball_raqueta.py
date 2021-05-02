@@ -46,8 +46,20 @@ class Bola():
     def dibujar(self, lienzo):
         pg.draw.circle(lienzo, self.color, (self.x, self.y), self.anchura//2)
     
-    def colision (self, objeto):
-        pass
+    def comprueba_colision (self, objeto):
+        '''
+        if self.x >= objeto.x and self.x <= objeto.x+objeto.anchura or \
+            self.x+self.anchura >= objeto.x and self.x+self.anchura <= objeto.x + objeto.anchura:
+            choqueX = True
+        else:
+            choqueX = False
+        '''
+        choqueX = self.x >= objeto.x and self.x <= objeto.x+objeto.anchura or \
+            self.x+self.anchura >= objeto.x and self.x+self.anchura <= objeto.x + objeto.anchura
+        choqueY = self.y >= objeto.y and self.y <= objeto.y+objeto.altura or \
+            self.y+self.altura >= objeto.y and self.y+self.altura <= objeto.y + objeto.altura
+        if choqueX and choqueY:
+            self.vy *= -1
     
 
 class Raqueta():
@@ -66,6 +78,7 @@ class Raqueta():
     
     def actualizar(self):
         teclas_pulsadas = pg.key.get_pressed()
+
         if teclas_pulsadas[pg.K_LEFT] and self.x > 0:
             self.x -= self.vx
         if teclas_pulsadas[pg.K_RIGHT] and self.x < ANCHO - self.anchura: 
@@ -93,8 +106,10 @@ while not game_over:
         
 
     # Modificación de estado
-    bola.actualizar()
     raqueta.actualizar()
+    pierdebola = bola.actualizar()
+    if pierdebola:
+        vidas -= 1
     bola.comprueba_colision(raqueta)
 
     # Gestión de la pantalla
@@ -103,6 +118,8 @@ while not game_over:
     raqueta.dibujar(pantalla)
 
     pg.display.flip()
+    if pierdebola:
+        pg.time.delay(500)
 
 
 pg.quit()
