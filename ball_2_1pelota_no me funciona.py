@@ -86,9 +86,9 @@ class Game():
             dt = reloj.tick(FPS)
             contador_milisegundos += dt
 
-        if contador_milisegundos >= 1000:
-            segundero += 1
-            contador_milisegundos = 0
+            if contador_milisegundos >= 1000:
+                segundero += 1
+                contador_milisegundos = 0
 
             for evento in pg.event.get():
                 if evento.type == pg.QUIT:
@@ -96,7 +96,7 @@ class Game():
                 
             # self.bola.update() actualiza una bola
             self.cuentaSegundos.text = segundero
-            self.todoGroup.update()
+            self.todoGroup.update(dt)
 
             self.pantalla.fill((0, 0, 0))
             #self.cuentaGolpes.dibuja('Hola', self.pantalla)
