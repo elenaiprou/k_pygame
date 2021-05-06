@@ -15,24 +15,21 @@ class Marcado(pg.sprite.Sprite):
         self.image = self.fuente.render(str(self.text), True, self.color)
         self.rect = self.image.get_rect(topleft=(x, y))
     
-    def update(self):#importante poner "updated" para actualizar, poner en cada grupo 
+    def update(self, dt):#importante poner "updated" para actualizar, poner en cada grupo 
         self.image = self.fuente.render(str(self.text), True, self.color)
 
-    '''
-    def dibuja (self, text, lienzo):
-        image = self.fuente.render(str(text), True, self.color)
-        lienzo.blit(image, (self.x, self.y))
-    '''
 
 class Raqueta(pg.sprite.Sprite):
+    fotos = ['electric00.png', 'electric01.png', 'electric02.png']
+
     def __init__(self, x, y, w=100, h=30):
         pg.sprite.Sprite.__init__(self)
         self.image = pg.Surface((w, h), pg.SRCALPHA, 32) #pg.SRCALPHA creamos superficie transparente
-        pg.draw.rect(self.image, (255, 0, 0), pg.RECT(0, 0, w, h), border_radius=5) #hemos hecho el dibujito
-        self.rect = self.image.get_rect(center = x, bottom = y)
+        pg.draw.rect(self.image, (255, 0, 0), pg.Rect(0, 0, w, h)) #hemos hecho el dibujito
+        self.rect = self.image.get_rect(centerx = x, bottom = y)
         self.vx = 7
     
-    def update(self):
+    def update(self, dt):
         teclas_pulsadas = pg.key.get_pressed()
         if teclas_pulsadas[pg.K_LEFT]:
             self.rect.x -= self.vx
@@ -56,7 +53,7 @@ class Bola(pg.sprite.Sprite): #el primer sprite es el modulo, el Sprite (mayuscu
         self.vx = random.randint(5, 10)*random.choice((-1, 1))
         self.vy = random.randint(5, 10)*random.choice((-1, 1))
 
-    def update(self): #controla la posicion de la bola, si choca con los limites cambia la posición y velocidad
+    def update(self, dt): #controla la posicion de la bola, si choca con los limites cambia la posición y velocidad
         self.rect.x += self.vx
         self.rect.y += self.vy
 
@@ -69,17 +66,16 @@ class Game():
     def __init__(self): #los atributos se crean dentro del la funcion constructor (def __init__)
         self.pantalla = pg.display.set_mode((ANCHO, ALTO))
         self.botes = 0
-        self.cuentaSegundos = Marcado(10, 10)
-
         self.todoGroup =pg.sprite.Group() #creamos de 1 a 20 bolas
-        for i in range(random.randint(1, 20)):
-            bola = Bola(random.randint(0, ANCHO), random.randint(0, ALTO))
-            self.todoGroup.add(bola)
+        
+        self.cuentaSegundos = Marcado(10, 10)
         self.todoGroup.add((self.cuentaSegundos))
-
-        '''
-        self.bola = Bola(ANCHO//2, ALTO//2) #estas colocando una bola en el centro de la pantalla. 
-        '''
+        
+        self.bola = Bola(random.randint(0, ANCHO), random.randint(0, ALTO))
+        self.todoGroup.add(self.bola)
+        
+        self.raqueta = Raqueta(x = ANCHO//2, y= ALTO-14)
+        self.todoGroup.add(self.raqueta)
 
     def bucle_principal(self):
         game_over = False #sin self delante pq es una variable y no un atributo, que además no tiene sentido en otro lugar.
