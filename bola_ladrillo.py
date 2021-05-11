@@ -96,23 +96,6 @@ class Ladrillo(pg.sprite.Sprite): #revisar pq no desaparecen los ladrillos cuand
         else:
             return False
 
-    def disponer_ladrillos(self):
-        level1 = ['XXXXXXXX', 'X--DD--X', 'X--DD--X', 'XXXXXXXX']
-        for fila in range(len(level1)):
-            contador = 0
-            for caracter in level1[fila]:
-                if caracter == 'X':
-                    x = 5 + (100 * contador)
-                    y = 5 + (40 * fila)
-                    ladrillo = Ladrillo(x, y)
-                    self.grupoLadrillos.add(ladrillo)
-                elif caracter == 'D':
-                    x = 5 + (100 * contador)
-                    y = 5 + (40 * fila)
-                    esDuro = True 
-                    ladrillo = Ladrillo(x, y, esDuro)
-                    self.grupoLadrillos.add(ladrillo)
-                contador += 1
 
 class Raqueta(pg.sprite.Sprite):
     disfraces = ['electric00.png', 'electric01.png', 'electric02.png']
@@ -228,32 +211,36 @@ class Game():
         self.grupoJugador = pg.sprite.Group()
         self.grupoLadrillos = pg.sprite.Group()
 
-        self.disponer_ladrillos()
+        level1 = ['XXXXXXXX', 
+        'X--DD--X',           
+        'X--DD--X',           
+        'XXXXXXXX']
 
-        # level1 = ['XXXXXXXX', 
-        # 'X--DD--X',           
-        # 'X--DD--X',           
-        # 'XXXXXXXX']
-
-        # esDuro = False
+        esDuro = False
+        for fila in range(len(level1)):
+            for columna in range(8):
+                    fila2 = level1[fila]
+                    columna2 = fila2[columna]
+                    x = columna * 100 + 5
+                    y = fila * 40 + 5
+                    if columna2 == "-":
+                        False
+                    elif columna2 == "D":
+                        esDuro = True
+                        ladrillo = Ladrillo(x, y, esDuro)
+                        self.grupoLadrillos.add(ladrillo)
+                    else:
+                        esDuro = False
+                        ladrillo = Ladrillo(x, y, esDuro)
+                        self.grupoLadrillos.add(ladrillo)
+        
         # for fila in range(4):
         #     for columna in range(8):
-        #             fila2 = level1[fila]
-        #             columna2 = fila2[columna]
-        #             x = columna * 100 + 5
-        #             y = fila * 40 + 5
-        #             if columna2 == "-":
-        #                 False
-        #             elif columna2 == "D":
-        #                 esDuro = True
-        #                 ladrillo = Ladrillo(x, y, esDuro)
-        #                 self.grupoLadrillos.add(ladrillo)
-        #             else:
-        #                 esDuro = False
-
-        #                 ladrillo = Ladrillo(x, y, esDuro)
-        #                 self.grupoLadrillos.add(ladrillo)
-
+        #         x = columna * 100 + 5
+        #         y = fila * 40 + 5 
+        #         esDuro = random.randint(1, 10) == 1
+        #         ladrillo = Ladrillo(x, y, esDuro)
+        #         self.grupoLadrillos.add(ladrillo)
 
         self.cuentaPuntos = Marcador_tipoH(10,10, fontsize=50)
         self.cuentaVidas = CuentaVidas(790, 10, 'topright', 50, (255, 255, 0)) 
